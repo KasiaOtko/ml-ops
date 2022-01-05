@@ -1,0 +1,2 @@
+- hyperparams.epochs=1
+- hyperparams.batch_size=32

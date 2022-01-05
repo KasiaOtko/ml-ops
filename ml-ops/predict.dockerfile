@@ -20,5 +20,5 @@ RUN pip install -r requirements.txt --no-cache-dir
 
 # Name training script as the entrypoint for our docker image
 # ENTRYPOINT is the application that we want to run when image is being executed
-ENTRYPOINT ["python", "-u", "src/models/predict_model.py /models/convolutional/checkpoint.pth"]
+ENTRYPOINT ["python", "-u", "src/models/predict_model.py"]
 

@@ -11,7 +11,6 @@ from torch.utils.data import DataLoader, Dataset
 
 from src.data.make_dataset import MNISTDataset
 
-
 @click.command()
 @click.argument('load_model_from', type=click.Path(exists=True))
 
