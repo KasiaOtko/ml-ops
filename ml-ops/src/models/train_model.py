@@ -21,7 +21,8 @@ import hydra
 import logging
 from omegaconf import OmegaConf
 
-log = logging.getLogger(__name__)
+import wandb
+wandb.init(project="MNIST_classifier", entity="thekatin")
 
 hydra.output_subdir = None
 
@@ -31,23 +32,19 @@ hydra.output_subdir = None
 @hydra.main(config_path="config", config_name="training_config.yaml")
 def train(config):
         print("Training day and night")
+        wandb.config = config.hyperparams
         orig_cwd = hydra.utils.get_original_cwd()
         orig_cwd = orig_cwd.replace(os.sep, '/')
-        print(orig_cwd)
         print(f"configuration: \n {OmegaConf.to_yaml(config)}")
         params = config.hyperparams
-        print(f"Learning rate: {params['lr']}, Epochs: {params.epochs}")
         # parser = argparse.ArgumentParser(description='Training arguments')
         # parser.add_argument('--lr', default=0.1)
         # parser.add_argument('--epochs', default=10)
-        # add any additional argument that you want
         # args = parser.parse_args(sys.argv[3:])
         # args = vars(args)
         # print(args)
 
-        # TODO: Implement training loop here
         model = MyAwesomeConvolutionalModel(10)
-        #trainset, _ = torch.load("data/processed/trainset.pt")
 
         train_images, train_labels = torch.load(orig_cwd+"/data/processed/train_images.pt"), torch.load(orig_cwd+"/data/processed/train_labels.pt")
         trainset = MNISTDataset(train_images, train_labels)
@@ -63,7 +60,7 @@ def train(config):
             for images, labels in trainloader:
 
                 log_ps = model(images.float())
-                #print(labels.long())
+
                 loss = criterion(log_ps, labels.long())
 
                 optimizer.zero_grad()
@@ -73,6 +70,7 @@ def train(config):
                 batch_loss.append(loss.item())
     
             train_loss.append(np.mean(batch_loss))
+            wandb.log({"loss": train_loss[e]})
             print(f"Epoch {e}, Train loss: {train_loss[e]}")
 
         #print(model)

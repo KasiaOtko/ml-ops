@@ -1,0 +1,22 @@
+{
+    "os": "Windows-10-10.0.19043-SP0",
+    "python": "3.9.7",
+    "heartbeatAt": "2022-01-06T10:13:36.038951",
+    "startedAt": "2022-01-06T10:13:34.700717",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "C:\\Users\\katin\\OneDrive\\Pulpit\\Folder\\STUDIA\\DTU\\Semestr III\\ML Ops\\s2_organisation_and_version_control\\ml-ops\\ml-ops\\src\\models\\train_model.py",
+    "codePath": "ml-ops\\src\\models\\train_model.py",
+    "git": {
+        "remote": "git@github.com:KasiaOtko/ml-ops.git",
+        "commit": "87cac0a3d2612974cae2192639b1fa5c79f52150"
+    },
+    "email": "katin010@gmail.com",
+    "root": "C:/Users/katin/OneDrive/Pulpit/Folder/STUDIA/DTU/Semestr III/ML Ops/s2_organisation_and_version_control/ml-ops",
+    "host": "DESKTOP-GELTP4H",
+    "username": "katin",
+    "executable": "C:\\Users\\katin\\Anaconda3\\envs\\s1_getting_started_env\\python.exe"
+}
