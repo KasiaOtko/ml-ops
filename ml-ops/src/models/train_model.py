@@ -31,7 +31,7 @@ hydra.output_subdir = None
 # @click.argument('epochs', default = 10, type=int)
 @hydra.main(config_path="config", config_name="training_config.yaml")
 def train(config):
-        print("Training day and night")
+        
         wandb.config = config.hyperparams
         orig_cwd = hydra.utils.get_original_cwd()
         orig_cwd = orig_cwd.replace(os.sep, '/')
@@ -53,7 +53,7 @@ def train(config):
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.Adam(model.parameters(), lr=params.lr)
 
-        # epochs = epochs
+        print("Training day and night")
         train_loss = []
         for e in range(params.epochs):
             batch_loss = []
@@ -76,7 +76,14 @@ def train(config):
         #print(model)
         torch.save(model.state_dict(), orig_cwd+'/models/convolutional/checkpoint.pth')
 
-        save_results(train_loss, orig_cwd)
+        #save_results(train_loss, orig_cwd)
+        fig = plt.figure(figsize=(8, 5))
+        plt.plot(train_loss)
+        plt.ylabel("Train loss")
+        plt.xlabel("Epochs")
+        plt.title("Learning curve - training")
+        plt.savefig(f"{orig_cwd}/reports/figures/Training_curve.png")
+        wandb.log({"plot": wandb.Image(fig)})
 
         return model
 
