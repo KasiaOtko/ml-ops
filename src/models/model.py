@@ -56,9 +56,9 @@ class MyAwesomeConvolutionalModel(nn.Module):
     def forward(self, x: Tensor):
         
         if x.ndim != 4:
-            raise ValueError("Expected input is not a 4D tensor.")
+            raise ValueError(f"Expected input is not a 4D tensor, instead it is a {x.ndim}D tensor.")
         if x.shape[1] != 1 or x.shape[2] != 28 or x.shape[3] != 28:
-            raise ValueError(f"Expected shape of input images is [1, 28, 28], while the model got {x.shape[1:3]}")
+            raise ValueError(f"Expected shape of input images is [batch_size, 1, 28, 28], while the model got {x.shape}")
         #x = x.permute(0, 3, 1, 2)
         x = F.relu(self.batchnorm1(self.conv_1(x)))
         #x = self.dropout(x)
