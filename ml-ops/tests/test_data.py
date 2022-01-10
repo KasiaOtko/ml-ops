@@ -9,18 +9,16 @@ import os.path
                         or not os.path.exists("data/processed/train_labels.pt"), reason="Train images or labels files not found")
 @pytest.mark.skipif(not os.path.exists("data/processed/test_images.pt") 
                         or not os.path.exists("data/processed/test_labels.pt"), reason="Test images or labels files not found")
-def test_data():
+@pytest.mark.parametrize("test_input, expected", [("len(trainset)", 25000), ("len(testset)", 5000)])
+def test_data(test_input, expected):
 
     train_images, train_labels = torch.load("data/processed/train_images.pt"), torch.load("data/processed/train_labels.pt")
     trainset = MNISTDataset(train_images, train_labels)
 
     test_images, test_labels = torch.load("data/processed/test_images.pt"), torch.load("data/processed/test_labels.pt")
     testset = MNISTDataset(test_images, test_labels)
-    N_train = 25000
-    N_test = 5000
 
-    assert len(trainset) == N_train, "Train dataset did not have the correct number of samples"
-    assert len(testset) == N_test, "Test dataset did not have the correct number of samples"
+    assert eval(test_input) == expected, "Train or test dataset did not have the correct number of samples"
     # Check dimension of images
     assert trainset.images.shape[1:] == torch.Size([1, 28, 28]), "Shape of train images is incorrect"
     assert testset.images.shape[1:] == torch.Size([1, 28, 28]), "Shape of test images is incorrect"
