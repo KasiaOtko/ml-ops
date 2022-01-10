@@ -35,7 +35,7 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
 
-    - name: Run isort on the repository
+    - name: Run flake8 on the repository
       run: |
         pip install flake8
         flake8 .
