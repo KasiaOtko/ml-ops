@@ -4,7 +4,7 @@ from torch.utils.data import DataLoader
 from src.models.model import MyAwesomeConvolutionalModel
 from src.data.make_dataset import MNISTDataset
 
-def test_model():
+def test_model_input_output():
 
     batch_size = 64
     train_images, train_labels = torch.load("data/processed/train_images.pt"), torch.load("data/processed/train_labels.pt")
@@ -30,8 +30,13 @@ def test_model():
             # check for the dimension of output
             assert log_ps.shape == torch.Size([last_batch_size, 10])
 
+def test_on_wrong_shape():
+    a  =2
+
 if __name__ == '__main__':
-    test_model()
+    test_model_input_output()
+
+    test_on_wrong_shape()
 
 
 

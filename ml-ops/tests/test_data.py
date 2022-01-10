@@ -17,8 +17,8 @@ def test_data():
     assert trainset.images.shape[1:] == torch.Size([1, 28, 28])
     assert testset.images.shape[1:] == torch.Size([1, 28, 28])
     # Check that all labels are represented
-    assert len(torch.unique(trainset.labels)) == 10
-    assert len(torch.unique(testset.labels)) == 10
+    assert all(i in trainset.labels for i in range(10))
+    assert all(i in testset.labels for i in range(10))
 
 if __name__ == '__main__':
     test_data()
