@@ -7,23 +7,21 @@ import sys
 from pathlib import Path
 
 import click
+import hydra
 import matplotlib.pyplot as plt
 import numpy as np
+import pytorch_lightning as pl
 import torch
 from dotenv import find_dotenv, load_dotenv
 from model import MyAwesomeConvolutionalModel
 from model_pytorch_lightning import MyLitAwesomeConvolutionalModel
+from omegaconf import OmegaConf
 from torch import nn, optim
 from torch.utils.data import DataLoader, Dataset
-import pytorch_lightning as pl
-
-from src.data.make_dataset import MNISTDataset
-
-import hydra
-import logging
-from omegaconf import OmegaConf
 
 import wandb
+from src.data.make_dataset import MNISTDataset
+
 wandb.init(project="MNIST_classifier", entity="thekatin")
 
 hydra.output_subdir = None

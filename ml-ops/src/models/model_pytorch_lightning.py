@@ -1,7 +1,6 @@
+import pytorch_lightning as pl
 import torch.nn.functional as F
 from torch import nn, optim
-
-import pytorch_lightning as pl
 
 
 class MyAwesomeModel(nn.Module):

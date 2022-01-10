@@ -9,6 +9,7 @@ from dotenv import find_dotenv, load_dotenv
 from torch.utils.data import DataLoader, Dataset, TensorDataset
 from torchvision import transforms
 
+
 @click.command()
 @click.argument('input_filepath', type=click.Path(exists=True))
 @click.argument('output_filepath', type=click.Path())

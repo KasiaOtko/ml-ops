@@ -1,9 +1,10 @@
-import torch
+import os.path
+
 import pytest
+import torch
 
 from src.data.make_dataset import MNISTDataset
 
-import os.path
 
 @pytest.mark.skipif(not os.path.exists("data/processed/train_images.pt") 
                         or not os.path.exists("data/processed/train_labels.pt"), reason="Train images or labels files not found")

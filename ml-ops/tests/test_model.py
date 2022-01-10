@@ -1,9 +1,10 @@
+import pytest
 import torch
 from torch.utils.data import DataLoader
-import pytest
 
-from src.models.model import MyAwesomeConvolutionalModel
 from src.data.make_dataset import MNISTDataset
+from src.models.model import MyAwesomeConvolutionalModel
+
 
 def test_model_input_output():
 

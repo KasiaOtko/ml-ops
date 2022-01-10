@@ -1,5 +1,5 @@
 import torch.nn.functional as F
-from torch import nn, Tensor
+from torch import Tensor, nn
 
 
 class MyAwesomeModel(nn.Module):
