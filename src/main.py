@@ -3,10 +3,10 @@ import sys
 
 import numpy as np
 import torch
-from model import MyAwesomeConvolutionalModel, MyAwesomeModel
+from src.models.model import MyAwesomeConvolutionalModel
 from torch import nn, optim
 
-from data import mnist
+from src.data.make_dataset import mnist
 
 
 class TrainOREvaluate(object):
@@ -22,12 +22,12 @@ class TrainOREvaluate(object):
         args = parser.parse_args(sys.argv[1:2])
         if not hasattr(self, args.command):
             print('Unrecognized command')
-            
+
             parser.print_help()
             exit(1)
         # use dispatch pattern to invoke method with same name
         getattr(self, args.command)()
-    
+
     def train(self):
         print("Training day and night")
         parser = argparse.ArgumentParser(description='Training arguments')
@@ -38,7 +38,7 @@ class TrainOREvaluate(object):
         args = vars(args)
         print(args['lr'])
         # TODO: Implement training loop here
-        #model = MyAwesomeModel(784, 256, 128, 10)
+        # model = MyAwesomeModel(784, 256, 128, 10)
         model = MyAwesomeConvolutionalModel(10)
         train_loader, _ = mnist()
 
@@ -50,9 +50,9 @@ class TrainOREvaluate(object):
         for e in range(epochs):
             batch_loss = []
             for images, labels in train_loader:
-            
+
                 log_ps = model(images.float())
-                
+
                 loss = criterion(log_ps, labels)
 
                 optimizer.zero_grad()
@@ -60,7 +60,7 @@ class TrainOREvaluate(object):
                 optimizer.step()
 
                 batch_loss.append(loss.item())
-    
+
             train_loss.append(np.mean(batch_loss))
             print(f"Epoch {e}, Train loss: {train_loss[e]}")
 
@@ -68,7 +68,7 @@ class TrainOREvaluate(object):
         torch.save(model.state_dict(), 'checkpoint.pth')
 
         return model
-        
+
     def evaluate(self):
         print("Evaluating until hitting the ceiling")
         parser = argparse.ArgumentParser(description='Training arguments')
@@ -76,7 +76,7 @@ class TrainOREvaluate(object):
         # add any additional argument that you want
         args = parser.parse_args(sys.argv[2:])
         print(args)
-        
+
         # TODO: Implement evaluation logic here
         # model = MyAwesomeModel(784, 256, 128, 10)
         model = MyAwesomeConvolutionalModel(10)
@@ -92,7 +92,7 @@ class TrainOREvaluate(object):
         test_loss = 0
 
         for images, labels in test_loader:
-    
+
             # images = images.resize_(images.size()[0], 784)
 
             output = model(images.float())

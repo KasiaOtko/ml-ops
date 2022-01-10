@@ -6,7 +6,7 @@ import click
 import numpy as np
 import torch
 from dotenv import find_dotenv, load_dotenv
-from torch.utils.data import DataLoader, Dataset, TensorDataset
+from torch.utils.data import TensorDataset
 from torchvision import transforms
 
 
@@ -29,6 +29,7 @@ def main(input_filepath, output_filepath):
 
     print("Successfully saved.")
 
+
 def mnist(input_filepath):
     # read image files
     test = np.load(input_filepath + "/test.npz")
@@ -37,7 +38,7 @@ def mnist(input_filepath):
     train2 = np.load(input_filepath + "/train_2.npz")
     train3 = np.load(input_filepath + "/train_3.npz")
     train4 = np.load(input_filepath + "/train_4.npz")
-    
+
     # extract images and labels
     train_images = np.concatenate((train0['images'], train1['images'], train2['images'], train3['images'], train4['images']))
     train_labels = np.concatenate((train0['labels'], train1['labels'], train2['labels'], train3['labels'], train4['labels']))
@@ -58,8 +59,9 @@ def mnist(input_filepath):
     test_images = test_images[:, None, :, :]
     return train_images, train_labels, test_images, test_labels
 
+
 class MNISTDataset(TensorDataset):
-    def __init__(self, images, labels, transform = None):
+    def __init__(self, images, labels, transform=None):
         self.images = images
         self.labels = labels
         self.transform = transform
@@ -76,6 +78,7 @@ class MNISTDataset(TensorDataset):
             img_out = self.transform(img_out)
 
         return img_out, labels
+
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
