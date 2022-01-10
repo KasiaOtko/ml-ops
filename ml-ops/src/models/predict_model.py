@@ -26,7 +26,7 @@ def predict(load_model_from):
     criterion = nn.CrossEntropyLoss()
 
     batch_loss = []
-    accuracy = 0
+    accuracy = []
     for images, labels in testloader:
     
             #images = images.resize_(images.size()[0], 784)
@@ -39,9 +39,9 @@ def predict(load_model_from):
         ps = torch.exp(output)
         # Class with highest probability is our predicted class, compare with true label
         equality = (labels.data == ps.max(1)[1])
-        accuracy += equality.type_as(torch.FloatTensor()).mean()
+        accuracy.append(equality.type_as(torch.FloatTensor()).mean())
 
-    print(f"Accuracy: {accuracy}")
+    print(f"Accuracy: {np.mean(accuracy)}")
     print("Test loss", np.mean(batch_loss))
 
 if __name__ == '__main__':

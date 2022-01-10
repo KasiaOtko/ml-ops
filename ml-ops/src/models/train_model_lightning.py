@@ -56,7 +56,7 @@ def train(config):
         testset = MNISTDataset(test_images, test_labels)
         testloader = DataLoader(testset, batch_size = params.batch_size)
 
-        model = MyLitAwesomeConvolutionalModel(10, params.lr)
+        model = MyLitAwesomeConvolutionalModel(10, params.lr, params.dropout_p)
 
         trainer = pl.Trainer(max_epochs = params.epochs, 
                             limit_train_batches = 1.0, 

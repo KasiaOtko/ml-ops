@@ -21,12 +21,13 @@ class MyAwesomeModel(nn.Module):
         return x
 
 class MyLitAwesomeConvolutionalModel(pl.LightningModule):
-    def __init__(self, output_size, lr):
+    def __init__(self, output_size, lr, dropout_p):
         super().__init__()
 
         self.num_classes = output_size
         self.lr = lr
-
+        self.dropout_p = dropout_p
+        self.dropout = nn.Dropout2d(p=self.dropout_p)
         # First convolutional layer
         self.conv_1 = nn.Conv2d(in_channels=1, out_channels=10, kernel_size=3, stride=1, padding = (1, 1))
         self.batchnorm1 = nn.BatchNorm2d(10)
@@ -60,13 +61,13 @@ class MyLitAwesomeConvolutionalModel(pl.LightningModule):
        
         #x = x.permute(0, 3, 1, 2)
         x = F.relu(self.batchnorm1(self.conv_1(x)))
-        #x = self.dropout(x)
+        x = self.dropout(x)
 
         x = F.relu(self.batchnorm2(self.conv_2(x)))
         x = self.pool2(x)
 
         x = F.relu(self.batchnorm3(self.conv_3(x)))
-        #x = self.dropout(x)
+        x = self.dropout(x)
 
         x = F.relu(self.batchnorm4(self.conv_4(x)))
         x = self.pool4(x)
@@ -74,6 +75,7 @@ class MyLitAwesomeConvolutionalModel(pl.LightningModule):
         x = x.view(x.size(0), -1)
         #print(x.size())
         x = F.relu(self.fc1(x))
+        x = self.dropout(x)
         x = F.log_softmax(self.l_out(x), dim = 1)
 
         return x

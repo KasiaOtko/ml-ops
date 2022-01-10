@@ -2,3 +2,4 @@ hyperparams:
   lr: 1e-3
   epochs: 5
   batch_size: 32
+  dropout_p: 0.15

@@ -55,8 +55,10 @@ def train(config):
 
         print("Training day and night")
         train_loss = []
+        accuracy = []
         for e in range(params.epochs):
             batch_loss = []
+            accuracy_batch = []
             for images, labels in trainloader:
 
                 log_ps = model(images.float())
@@ -68,10 +70,14 @@ def train(config):
                 optimizer.step()
 
                 batch_loss.append(loss.item())
+                ps = torch.exp(log_ps)
+                equality = (labels.data == ps.max(1)[1]).type_as(torch.FloatTensor()).mean()
+                accuracy_batch.append(equality)
     
             train_loss.append(np.mean(batch_loss))
+            accuracy.append(np.mean(accuracy_batch))
             wandb.log({"loss": train_loss[e]})
-            print(f"Epoch {e}, Train loss: {train_loss[e]}")
+            print(f"Epoch {e}, Train loss: {train_loss[e]}, Accuracy: {accuracy[e]}")
 
         #print(model)
         torch.save(model.state_dict(), orig_cwd+'/models/convolutional/checkpoint.pth')
