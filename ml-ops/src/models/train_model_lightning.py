@@ -46,8 +46,6 @@ def train(config):
         # args = vars(args)
         # print(args)
 
-        model = MyAwesomeConvolutionalModel(10)
-
         train_images, train_labels = torch.load(orig_cwd+"/data/processed/train_images.pt"), torch.load(orig_cwd+"/data/processed/train_labels.pt")
         trainset = MNISTDataset(train_images, train_labels)
         trainloader = DataLoader(trainset, batch_size = params.batch_size)
@@ -64,30 +62,6 @@ def train(config):
         trainer.fit(model, trainloader)
         trainer.test(dataloaders=testloader)
 
-        # criterion = nn.CrossEntropyLoss()
-        # optimizer = optim.Adam(model.parameters(), lr=params.lr)
-
-        # print("Training day and night")
-        # train_loss = []
-        # for e in range(params.epochs):
-        #     batch_loss = []
-        #     for images, labels in trainloader:
-
-        #         log_ps = model(images.float())
-
-        #         loss = criterion(log_ps, labels.long())
-
-        #         optimizer.zero_grad()
-        #         loss.backward()
-        #         optimizer.step()
-
-        #         batch_loss.append(loss.item())
-    
-        #     train_loss.append(np.mean(batch_loss))
-        #     wandb.log({"loss": train_loss[e]})
-        #     print(f"Epoch {e}, Train loss: {train_loss[e]}")
-
-        # print(model)
         torch.save(model.state_dict(), orig_cwd+'/models/convolutional/checkpoint.pth')
 
         # save_results(train_loss, orig_cwd)
