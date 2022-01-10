@@ -1,5 +1,6 @@
 import torch
 from torch.utils.data import DataLoader
+import pytest
 
 from src.models.model import MyAwesomeConvolutionalModel
 from src.data.make_dataset import MNISTDataset
@@ -30,13 +31,16 @@ def test_model_input_output():
             # check for the dimension of output
             assert log_ps.shape == torch.Size([last_batch_size, 10])
 
-def test_on_wrong_shape():
-    a  =2
+def test_on_wrong_shape_to_forward():
+    model = MyAwesomeConvolutionalModel(10)
+    with pytest.raises(ValueError, match = "Expected input is not a 4D tensor."):
+        model(torch.randn(1, 2, 3))
 
 if __name__ == '__main__':
+    test_on_wrong_shape_to_forward()
     test_model_input_output()
 
-    test_on_wrong_shape()
+    
 
 
 
