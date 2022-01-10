@@ -9,9 +9,6 @@ from dotenv import find_dotenv, load_dotenv
 from torch.utils.data import DataLoader, Dataset, TensorDataset
 from torchvision import transforms
 
-#from src.models.train_model import train
-
-
 @click.command()
 @click.argument('input_filepath', type=click.Path(exists=True))
 @click.argument('output_filepath', type=click.Path())
@@ -30,7 +27,6 @@ def main(input_filepath, output_filepath):
     torch.save(test_labels, output_filepath + '/test_labels.pt')
 
     print("Successfully saved.")
-
 
 def mnist(input_filepath):
     # read image files
@@ -59,20 +55,6 @@ def mnist(input_filepath):
     test_images = preprocess_transform(test_images)
     train_images = train_images[:, None, :, :]
     test_images = test_images[:, None, :, :]
-    #print(test_images.shape)
-
-    # store images and labels in one dictionary
-    # trainset = dict()
-    # trainset['images'] = train_images
-    # trainset['labels'] = train_labels
-
-    # testset = dict()
-    # testset['images'] = test_images
-    # testset['labels'] = test_labels
-    # trainset = MNISTDataset(train_images, train_labels, transform = transform)
-    # trainloader = DataLoader(trainset, batch_size = 64)
-    # testset = MNISTDataset(test_images, test_labels, transform = transform)
-    # testloader = DataLoader(testset, batch_size = 64)
     return train_images, train_labels, test_images, test_labels
 
 class MNISTDataset(TensorDataset):
