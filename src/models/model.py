@@ -44,38 +44,38 @@ class MyAwesomeConvolutionalModel(nn.Module):
         self.pool4 = nn.MaxPool2d(kernel_size=2, stride=2)  # 14 -> 7
 
         # Ouput layer
-        self.in_features = 7*7*30
+        self.in_features = 7 * 7 * 30
 
-        self.fc1 = nn.Linear(in_features=self.in_features, 
-                          out_features=300,
-                          bias=True)
+        self.fc1 = nn.Linear(in_features=self.in_features,
+                             out_features=300,
+                             bias=True)
 
-        self.l_out = nn.Linear(in_features=300, 
-                            out_features=self.num_classes,
-                            bias=False)
-        
+        self.l_out = nn.Linear(in_features=300,
+                               out_features=self.num_classes,
+                               bias=False)
+
     def forward(self, x: Tensor):
-        
+
         if x.ndim != 4:
             raise ValueError(f"Expected input is not a 4D tensor, instead it is a {x.ndim}D tensor.")
         if x.shape[1] != 1 or x.shape[2] != 28 or x.shape[3] != 28:
             raise ValueError(f"Expected shape of input images is [batch_size, 1, 28, 28], while the model got {x.shape}")
-        #x = x.permute(0, 3, 1, 2)
+        # x = x.permute(0, 3, 1, 2)
         x = F.relu(self.batchnorm1(self.conv_1(x)))
-        #x = self.dropout(x)
+        # x = self.dropout(x)
 
         x = F.relu(self.batchnorm2(self.conv_2(x)))
         x = self.pool2(x)
 
         x = F.relu(self.batchnorm3(self.conv_3(x)))
-        #x = self.dropout(x)
+        # x = self.dropout(x)
 
         x = F.relu(self.batchnorm4(self.conv_4(x)))
         x = self.pool4(x)
 
         x = x.view(x.size(0), -1)
-        #print(x.size())
+        # print(x.size())
         x = F.relu(self.fc1(x))
-        x = F.log_softmax(self.l_out(x), dim = 1)
+        x = F.log_softmax(self.l_out(x), dim=1)
 
         return x

@@ -6,10 +6,10 @@ import torch
 from src.data.make_dataset import MNISTDataset
 
 
-@pytest.mark.skipif(not os.path.exists("data/processed/train_images.pt") 
-                        or not os.path.exists("data/processed/train_labels.pt"), reason="Train images or labels files not found")
-@pytest.mark.skipif(not os.path.exists("data/processed/test_images.pt") 
-                        or not os.path.exists("data/processed/test_labels.pt"), reason="Test images or labels files not found")
+@pytest.mark.skipif(not os.path.exists("data/processed/train_images.pt")
+                    or not os.path.exists("data/processed/train_labels.pt"), reason="Train images or labels files not found")
+@pytest.mark.skipif(not os.path.exists("data/processed/test_images.pt")
+                    or not os.path.exists("data/processed/test_labels.pt"), reason="Test images or labels files not found")
 @pytest.mark.parametrize("test_input, expected", [("len(trainset)", 25000), ("len(testset)", 5000)])
 def test_data(test_input, expected):
 
@@ -26,6 +26,7 @@ def test_data(test_input, expected):
     # Check that all labels are represented
     assert all(i in trainset.labels for i in range(10)), "Not all of the classes are represented in the train set"
     assert all(i in testset.labels for i in range(10)), "Not all of the classes are represented in the test set"
+
 
 if __name__ == '__main__':
     test_data()
