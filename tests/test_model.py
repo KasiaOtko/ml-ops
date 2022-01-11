@@ -36,7 +36,7 @@ def test_model_input_output():
 def test_on_wrong_shape_to_forward():
     model = MyAwesomeConvolutionalModel(10)
     with pytest.raises(ValueError, match="Expected input is not a 4D tensor"):
-        model(torch.randn(1, 2, 3, 4))
+        model(torch.randn(1, 2, 3))
 
 
 if __name__ == '__main__':
