@@ -91,3 +91,4 @@ target/
 
 # unused scripts
 /src/main.py
+/.github/workflows/flake8.yml
