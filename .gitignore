@@ -90,4 +90,4 @@ target/
 .mypy_cache/
 
 # unused scripts
-/src/models/main.py
+/src/main.py
