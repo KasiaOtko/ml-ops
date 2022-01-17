@@ -11,3 +11,5 @@ setuptools==58.0.4
 torch==1.10.1
 torchvision==0.11.2
 wandb
+dvc
+dvc[gs]
