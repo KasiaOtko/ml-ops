@@ -1,4 +1,5 @@
 import numpy as np
+import torch
 from torch.utils.data import DataLoader, Dataset
 from torchvision import transforms
 
@@ -35,11 +36,6 @@ def mnist():
     )
     test_images = test["images"]
     test_labels = test["labels"]
-
-    # train_images = torch.Tensor(train_images)
-    # train_labels = torch.Tensor(train_labels)
-    # test_images = torch.Tensor(test_images)
-    # test_labels = torch.Tensor(test_labels)
 
     transform = transforms.Compose(
         [transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]
