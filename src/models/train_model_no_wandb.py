@@ -12,10 +12,7 @@ from omegaconf import OmegaConf
 from torch import nn, optim
 from torch.utils.data import DataLoader
 
-# import wandb
 from src.data.make_dataset import MNISTDataset
-
-# wandb.init(project="MNIST_classifier", entity="thekatin")
 
 # hydra.output_subdir = None
 
@@ -26,7 +23,6 @@ from src.data.make_dataset import MNISTDataset
 @hydra.main(config_path="config", config_name="training_config.yaml")
 def train(config):
 
-    # wandb.config = config.hyperparams
     orig_cwd = hydra.utils.get_original_cwd()
     orig_cwd = orig_cwd.replace(os.sep, '/')
     print(f"configuration: \n {OmegaConf.to_yaml(config)}")
@@ -70,7 +66,6 @@ def train(config):
 
         train_loss.append(np.mean(batch_loss))
         accuracy.append(np.mean(accuracy_batch))
-        # wandb.log({"loss": train_loss[e]})
         print(f"Epoch {e}, Train loss: {train_loss[e]}, Accuracy: {accuracy[e]}")
 
     # print(model)
@@ -83,7 +78,6 @@ def train(config):
     plt.xlabel("Epochs")
     plt.title("Learning curve - training")
     plt.savefig(f"{orig_cwd}/reports/figures/Training_curve.png")
-    # wandb.log({"plot": wandb.Image(fig)})
 
     return model
 
